@@ -2,6 +2,7 @@ const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 
 class UserService {
+  // Method to register a new user
   async userRegister(data) {
     const existingUser = await Users.findOne({ where: { email: data.email } });
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -20,6 +21,15 @@ class UserService {
     } else {
       throw new Error("Email already exists");
     }
+  }
+
+  // methodfor login user
+  async userLogin(data) {
+    const user = await Users.findOne({ where: { email: data.email } });
+    if (!user || !(await bcrypt.compare(data.password, user.password))) {
+      throw new Error("Invalid credentials");
+    }
+    return user;
   }
 }
 module.exports = UserService;
