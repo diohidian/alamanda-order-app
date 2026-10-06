@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   "development": {
     "username": process.env.PGUSER,
@@ -10,8 +12,7 @@ module.exports = {
         "require": true,
         "rejectUnauthorized": false
       },
-      "sslmode": "require"
-    }
+  }
   },
   "test": {
     "username": process.env.PGUSER,
