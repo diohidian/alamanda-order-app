@@ -39,7 +39,8 @@ class MenuController {
                 data: menu 
             });
         } catch (error) {
-            res.status(400).json({ message: "Internal server error" });
+            console.error("Failed to create menu:", error);
+            res.status(500).json({ message: "Internal server error" });
         }
     }
 }
