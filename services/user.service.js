@@ -31,5 +31,9 @@ class UserService {
     }
     return user;
   }
+
+  async getUser(data) {
+    return await findOne({where: { id: data.id} })
+  }
 }
 module.exports = UserService;

@@ -20,7 +20,14 @@ class UserController {
       const user = await userService.userLogin({ email, password });
       res.status(200).json({ 
         message: "User logged in successfully",
-        data: user 
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt
+        } 
       });
     } catch (error) {
       res.status(401).json({ message: error.message });
