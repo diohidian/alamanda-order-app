@@ -1,5 +1,6 @@
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken')
 
 class UserService {
   // Method to register a new user
@@ -34,6 +35,19 @@ class UserService {
 
   async getUser(data) {
     return await findOne({where: { id: data.id} })
+  }
+
+  async generateToken({id, email, name}) {
+    const payload = {
+      sub: "payload",
+      usr: {
+        id: id,
+        email: email,
+        name: name
+      }
+    }
+
+    return jwt.sign(payload, process.env.SECRETTOKEN, { expiresIn: '1d' });
   }
 }
 module.exports = UserService;

@@ -17,7 +17,7 @@ class UserController {
   async login(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await userService.userLogin({ email, password });
+      const user = await userService.userLogin({ email, password })
       res.status(200).json({ 
         message: "User logged in successfully",
         data: {
@@ -32,6 +32,24 @@ class UserController {
     } catch (error) {
       res.status(401).json({ message: error.message });
     }
+  }
+
+  async loginAuth(req, res) {
+    const { email, password } = req.body;
+    userService.userLogin({email, password}).then(async (userData) => {
+      const data = {
+        id: userData.id,
+        name: userData.name,
+        username: userData.email,
+        accessToken: await userService.generateToken({ id: userData.id, email: userData.email, name: userData.name }),
+      }
+
+      res.status(200).json({
+        message: "succes login!",data: data
+      }).catch(err => {
+        res.status(401).json({message: "error login", err: err})
+      })
+    })
   }
 }
 
