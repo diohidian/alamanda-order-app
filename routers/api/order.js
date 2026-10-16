@@ -1,6 +1,7 @@
 const express = require('express');
 const routerOrder = express.Router();
 const OrderController = require('../../controllers/order.controller');
+const checkToken = require('../../middleware/checkToken');
 const orderController = new OrderController();
 
 routerOrder.post('/v1/orders/create', orderController.createOrder);
